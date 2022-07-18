@@ -1,28 +1,65 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <the-header></the-header>
+    <!-- <badge-list></badge-list>
+    <user-info
+      :full-name="activeUser.name"
+      :info-text="activeUser.description"
+      :role="activeUser.role"
+    ></user-info>
+    <course-goal #default="slotProps">
+      <h2>{{ slotProps.goal }}</h2>
+      <p>{{ slotProps.anotherProp }}</p>
+    </course-goal> -->
+    <button @click="setSelectedComponent('active-goal')">Active goals</button>
+    <button @click="setSelectedComponent('manage-goal')">Manage goals</button>
+    <keep-alive>
+      <component :is="selectedComponent"></component>
+    </keep-alive>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import BadgeList from './components/BadgeList';
+// import UserInfo from './components/UserInfo';
+// import CourseGoal from './components/CourseGoal';
+import TheHeader from './components/layouts/TheHeader';
+import ManageGoal from './components/ManageGoal';
+import ActiveGoal from './components/ActiveGoal';
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    TheHeader,
+    ManageGoal,
+    ActiveGoal,
+    // BadgeList,
+    // UserInfo,
+    // CourseGoal,
+  },
+  data() {
+    return {
+      activeUser: {
+        name: 'Maximilian Schwarzmüller',
+        description: 'Site owner and admin',
+        role: 'admin',
+      },
+      selectedComponent: 'active-goal',
+    };
+  },
+  methods: {
+    setSelectedComponent(cmp) {
+      this.selectedComponent = cmp;
+    }
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
 }
 </style>
